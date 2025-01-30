@@ -1,8 +1,11 @@
-import { Controller, Get, Param } from "@nestjs/common";
+import { All, Controller, Delete, Get, Param, Post } from "@nestjs/common";
 import { AppService } from "./app.service";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 
 
 @Controller()
+@ApiTags('apps')
+@ApiBearerAuth()
 export class AppController {
 
   constructor(private appService:AppService){
@@ -11,7 +14,7 @@ export class AppController {
 
   @Get('/')
   mainPage(){
-    return "main page an ecummers"
+    return {mes:"main page an ecummers"}
   }
 
   @Get('/v2')
@@ -29,6 +32,14 @@ export class AppController {
   sayHalloToName(@Param('name') name:string){
     return {
       message: `hello ${name} world`
+    }
+  }
+
+  @Delete(':userID')
+  DeleteId(@Param('userID')id:number){
+    return{
+      status:true,
+      message: ` delete ${id}`
     }
   }
 
